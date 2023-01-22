@@ -1,0 +1,10 @@
+backend:
+  name: git-gateway
+  branch: main
+media_folder: public/images
+collections:
+  - name: posts
+    fields:
+      - widget: string
+        name: title
+    folder: content/posts
