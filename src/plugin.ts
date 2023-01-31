@@ -14,6 +14,7 @@ import {
   ImageWidget,
   ListWidget,
   MapWidget,
+  MarkdownWidget,
   NetlifyCMSConfig,
   NumberWidget,
   ObjectWidget,
@@ -110,6 +111,12 @@ export const defineTextWidget = (
   widget: Omit<TextWidget, "widget">
 ): TextWidget => ({
   widget: "text",
+  ...widget,
+});
+export const defineMarkdownWidget = (
+  widget: Omit<MarkdownWidget, "widget">
+): MarkdownWidget => ({
+  widget: "markdown",
   ...widget,
 });
 

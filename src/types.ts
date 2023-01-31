@@ -13,7 +13,8 @@ type Widgets =
   | "relation"
   | "select"
   | "string"
-  | "text";
+  | "text"
+  | "markdown";
 
 interface BaseCollectionField {
   name: string;
@@ -150,6 +151,17 @@ export interface TextWidget extends BaseCollectionField {
   default?: string;
 }
 
+type MarkdownButtons = "bold" | "italic" | "code" | "link" | "heading-one" | "heading-two" | "heading-three | heading-four" | "heading-five" | "heading-six" | "quote" | "bulleted-list" | "numbered-list"
+
+export interface MarkdownWidget extends BaseCollectionField {
+  widget: "markdown";
+  default?: string;
+  buttons?: MarkdownButtons[];
+  editor_components?: ("image" | "code-block")[];
+  modes?: ("raw" | "rich_text")[],
+  sanitize_preview?: boolean;
+} 
+
 export type CollectionField =
   | BooleanWidget
   | CodeWidget
@@ -165,7 +177,8 @@ export type CollectionField =
   | RelationWidget
   | SelectWidget
   | StringWidget
-  | TextWidget;
+  | TextWidget
+  | MarkdownWidget;
 
 export interface Collection {
   /**
