@@ -8,6 +8,7 @@ import {
   ColorWidget,
   DateTimeWidget,
   FileCollection,
+  FileCollectionEntry,
   FileWidget,
   FolderCollection,
   HiddenWidget,
@@ -29,6 +30,7 @@ export const defineConfig = (config: NetlifyCMSConfig): NetlifyCMSConfig =>
 export const defineFolderCollection = (collection: FolderCollection) =>
   collection;
 export const defineFileCollection = (collection: FileCollection) => collection;
+export const defineFileCollectionEntry = (collection: FileCollectionEntry) => collection;
 export const defineBooleanWidget = (
   widget: Omit<BooleanWidget, "widget">
 ): BooleanWidget => ({
@@ -179,7 +181,8 @@ const getConfigFile = async (
     }
 
     return config as NetlifyCMSConfig;
-  } catch {
+  } catch (error) {
+    console.log(error);
     throw new Error(`Config file not found`);
   }
 };

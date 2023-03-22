@@ -300,12 +300,18 @@ export interface Collection {
   view_groups?: string;
 }
 
-export interface FileCollection extends Collection {
+export interface FileCollection {
+  name: string;
+  label?: string;
+  files: FileCollectionEntry[];
+}
+
+export interface FileCollectionEntry extends Collection {
   /**
    * specifies the collection type and location;
    * details in Collection Types
    */
-  files: string;
+  file: string;
 }
 
 export interface FolderCollection extends Collection {
@@ -419,5 +425,5 @@ export type NetlifyCMSConfig = {
     sanitize_replacement?: string;
   };
 
-  collections: Collection[];
+  collections: (FileCollection | FolderCollection)[];
 };
