@@ -89,6 +89,7 @@ export interface ListWidget extends BaseCollectionField {
   label_singular?: string;
   field?: CollectionField;
   fields?: CollectionField[];
+  types?: ObjectWidget[];
   max?: number;
   min?: number;
   add_to_top?: boolean;
