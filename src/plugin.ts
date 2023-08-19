@@ -51,7 +51,7 @@ export const defineColorWidget = (
 });
 export const defineDateTimeWidget = (
   widget: Omit<DateTimeWidget, "widget">
-) => ({ widget: "datetime", ...widget });
+): DateTimeWidget => ({ widget: "datetime", ...widget });
 export const defineHiddenWidget = (
   widget: Omit<HiddenWidget, "widget">
 ): HiddenWidget => ({
