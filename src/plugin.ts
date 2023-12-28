@@ -1,7 +1,8 @@
-import { mkdir, readdir, writeFile } from "fs/promises";
-import path from "path";
+import { mkdir, readdir, writeFile } from "node:fs/promises";
+import path from "node:path";
 import { Plugin, loadConfigFromFile } from "vite";
 import YAML from "yaml";
+import indexHTMLTemplate from "./index.template";
 import {
   BooleanWidget,
   CodeWidget,
@@ -123,9 +124,50 @@ export const defineMarkdownWidget = (
 });
 
 export type NetlifyCMSEntry = {
+  /**
+   * Name of config file
+   * 
+   * @default cms.config
+   */
   configFile?: string;
+
+  /**
+   * Netlify CMS config object
+   */
   config?: NetlifyCMSConfig;
+
+  /**
+   * Folder to save config file
+   * 
+   * @default ./public/admin
+   */
   saveFolder?: string;
+
+  /**
+   * If has to create index.html file in the save folder
+   */
+  createIndexHTML?: boolean;
+
+  /**
+   * Title of the admin page
+   * 
+   * @default Admin
+   */
+  title?: string;
+
+  /**
+   * Icon URL of the admin page
+   * 
+   * @default https://decapcms.org/img/decap-logo.svg
+   */
+  iconUrl?: string;
+
+  /**
+   * If has to use identity widget
+   * 
+   * @default true
+   */
+  useIdentityWidget?: boolean;
 };
 
 const createFolderIfNotExists = async (path: string) => {
@@ -140,15 +182,15 @@ const saveConfig = async (document: string, pathTo: string) => {
   await writeFile(pathTo, document);
 };
 
-const resolveConfigFile = (configFile: string) => {
-  const path = configFile.startsWith(".") ? configFile.slice(2) : configFile;
+const resolveConfigFilePath = (configFile: string) => {
+  const _path = configFile.startsWith(".") ? configFile.slice(2) : configFile;
 
-  if (!path) return configFile;
-  if (["ts", "js", "cjs", "mjs"].some((ext) => path.includes(ext))) {
-    return path.split(".").slice(0, -1).join(".");
+  if (!_path) return configFile;
+  if (["ts", "js", "cjs", "mjs"].some((ext) => _path.includes(ext))) {
+    return _path.split(".").slice(0, -1).join(".");
   }
 
-  return path;
+  return _path;
 };
 
 const getConfigFile = async (
@@ -157,7 +199,7 @@ const getConfigFile = async (
 ): Promise<NetlifyCMSConfig> => {
   try {
     const files = await readdir(root);
-    const configPath = resolveConfigFile(configFile);
+    const configPath = resolveConfigFilePath(configFile);
 
     if (configPath.includes("/")) {
       const [folder, file] = configPath.split("/");
@@ -181,17 +223,32 @@ const getConfigFile = async (
     }
 
     return config as NetlifyCMSConfig;
-  } catch (error) {
-    console.log(error);
+  } catch {
     throw new Error(`Config file not found`);
   }
 };
 
+const createIndex = (title: string, iconUrl: string, useIdentityWidget: boolean) => {
+  const icon = iconUrl ? `<link rel="icon" type="image/svg+xml" href="${iconUrl}" />` : "";
+  const identity = useIdentityWidget ? `<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>` : "";
+
+  const document = indexHTMLTemplate
+    .replace("{{ title }}", title)
+    .replace("{{ icon }}", icon)
+    .replace("{{ identity }}", identity);
+
+  return document;
+}
+
 export const createConfig = async (root: string, entry?: NetlifyCMSEntry) => {
   const {
-    configFile = "./netlify.config.ts",
+    configFile = "cms.config",
     config,
     saveFolder = "./public/admin",
+    createIndexHTML = true,
+    title = "Admin",
+    iconUrl = "https://decapcms.org/img/decap-logo.svg",
+    useIdentityWidget = true,
   } = entry ?? {};
 
   const resolvedConfig = config ?? (await getConfigFile(root, configFile));
@@ -199,6 +256,11 @@ export const createConfig = async (root: string, entry?: NetlifyCMSEntry) => {
 
   const document = YAML.stringify(resolvedConfig);
   await saveConfig(document, path.join(root, saveFolder, "config.yml"));
+
+  if (!createIndexHTML) return;
+
+  const indexHTML = createIndex(title, iconUrl, useIdentityWidget);
+  await saveConfig(indexHTML, path.join(root, saveFolder, "index.html"));
 };
 
 export default async function (entry?: NetlifyCMSEntry): Promise<Plugin> {
@@ -210,11 +272,19 @@ export default async function (entry?: NetlifyCMSEntry): Promise<Plugin> {
       root = config.root;
     },
     buildStart: async () => {
-      await createConfig(root, entry);
+      try {
+        await createConfig(root, entry);
+      } catch (error) {
+        console.log(error);
+      }
     },
     handleHotUpdate: async ({ file }) => {
-      if (file.endsWith("netlify.config.ts")) {
-        await createConfig(root, entry);
+      if (file.includes(entry?.configFile ?? "cms.config")) {
+        try {
+          await createConfig(root, entry);
+        } catch (error) {
+          console.log(error);
+        }
       }
     },
   };

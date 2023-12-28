@@ -1,0 +1,16 @@
+{
+  "name": "demo",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev --host",
+    "start": "astro dev --host",
+    "build": "astro check && astro build",
+    "preview": "astro preview --host",
+    "astro": "astro",
+    "server": "npx decap-server"
+  },
+  "dependencies": {
+    "astro": "^4.0.8"
+  }
+}
