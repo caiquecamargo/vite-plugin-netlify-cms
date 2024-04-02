@@ -1,9 +1,10 @@
-import { mkdir, readdir, writeFile } from "node:fs/promises";
-import path from "node:path";
-import { Plugin, loadConfigFromFile } from "vite";
-import YAML from "yaml";
-import indexHTMLTemplate from "./index.template";
-import {
+import { mkdir, readdir, writeFile } from 'node:fs/promises';
+import path from 'node:path';
+import type { Plugin } from 'vite';
+import { loadConfigFromFile } from 'vite';
+import YAML from 'yaml';
+import indexHTMLTemplate from './index.template';
+import type {
   BooleanWidget,
   CodeWidget,
   ColorWidget,
@@ -24,109 +25,111 @@ import {
   SelectWidget,
   StringWidget,
   TextWidget,
-} from "./types";
+} from './types';
 
-export const defineConfig = (config: NetlifyCMSConfig): NetlifyCMSConfig =>
-  config;
-export const defineFolderCollection = (collection: FolderCollection) =>
-  collection;
+export function defineConfig(config: NetlifyCMSConfig): NetlifyCMSConfig {
+  return config;
+}
+export function defineFolderCollection(collection: FolderCollection) {
+  return collection;
+}
 export const defineFileCollection = (collection: FileCollection) => collection;
 export const defineFileCollectionEntry = (collection: FileCollectionEntry) => collection;
-export const defineBooleanWidget = (
-  widget: Omit<BooleanWidget, "widget">
-): BooleanWidget => ({
-  widget: "boolean",
-  ...widget,
-});
-export const defineCodeWidget = (
-  widget: Omit<CodeWidget, "widget">
-): CodeWidget => ({
-  widget: "code",
-  ...widget,
-});
-export const defineColorWidget = (
-  widget: Omit<ColorWidget, "widget">
-): ColorWidget => ({
-  widget: "color",
-  ...widget,
-});
-export const defineDateTimeWidget = (
-  widget: Omit<DateTimeWidget, "widget">
-): DateTimeWidget => ({ widget: "datetime", ...widget });
-export const defineHiddenWidget = (
-  widget: Omit<HiddenWidget, "widget">
-): HiddenWidget => ({
-  widget: "hidden",
-  ...widget,
-});
-export const defineFileWidget = (
-  widget: Omit<FileWidget, "widget">
-): FileWidget => ({
-  widget: "file",
-  ...widget,
-});
-export const defineImageWidget = (
-  widget: Omit<ImageWidget, "widget">
-): ImageWidget => ({
-  widget: "image",
-  ...widget,
-});
-export const defineListWidget = (
-  widget: Omit<ListWidget, "widget">
-): ListWidget => ({
-  widget: "list",
-  ...widget,
-});
-export const defineMapWidget = (
-  widget: Omit<MapWidget, "widget">
-): MapWidget => ({
-  widget: "map",
-  ...widget,
-});
-export const defineNumberWidget = (
-  widget: Omit<NumberWidget, "widget">
-): NumberWidget => ({
-  widget: "number",
-  ...widget,
-});
-export const defineObjectWidget = (
-  widget: Omit<ObjectWidget, "widget">
-): ObjectWidget => ({
-  widget: "object",
-  ...widget,
-});
-export const defineRelationWidget = (
-  widget: Omit<RelationWidget, "widget">
-): RelationWidget => ({ widget: "relation", ...widget });
-export const defineSelectWidget = (
-  widget: Omit<SelectWidget, "widget">
-): SelectWidget => ({
-  widget: "select",
-  ...widget,
-});
-export const defineStringWidget = (
-  widget: Omit<StringWidget, "widget">
-): StringWidget => ({
-  widget: "string",
-  ...widget,
-});
-export const defineTextWidget = (
-  widget: Omit<TextWidget, "widget">
-): TextWidget => ({
-  widget: "text",
-  ...widget,
-});
-export const defineMarkdownWidget = (
-  widget: Omit<MarkdownWidget, "widget">
-): MarkdownWidget => ({
-  widget: "markdown",
-  ...widget,
-});
+export function defineBooleanWidget(widget: Omit<BooleanWidget, 'widget'>): BooleanWidget {
+  return {
+    widget: 'boolean',
+    ...widget,
+  };
+}
+export function defineCodeWidget(widget: Omit<CodeWidget, 'widget'>): CodeWidget {
+  return {
+    widget: 'code',
+    ...widget,
+  };
+}
+export function defineColorWidget(widget: Omit<ColorWidget, 'widget'>): ColorWidget {
+  return {
+    widget: 'color',
+    ...widget,
+  };
+}
+export function defineDateTimeWidget(widget: Omit<DateTimeWidget, 'widget'>): DateTimeWidget {
+  return { widget: 'datetime', ...widget };
+}
+export function defineHiddenWidget(widget: Omit<HiddenWidget, 'widget'>): HiddenWidget {
+  return {
+    widget: 'hidden',
+    ...widget,
+  };
+}
+export function defineFileWidget(widget: Omit<FileWidget, 'widget'>): FileWidget {
+  return {
+    widget: 'file',
+    ...widget,
+  };
+}
+export function defineImageWidget(widget: Omit<ImageWidget, 'widget'>): ImageWidget {
+  return {
+    widget: 'image',
+    ...widget,
+  };
+}
+export function defineListWidget(widget: Omit<ListWidget, 'widget'>): ListWidget {
+  return {
+    widget: 'list',
+    ...widget,
+  };
+}
+export function defineMapWidget(widget: Omit<MapWidget, 'widget'>): MapWidget {
+  return {
+    widget: 'map',
+    ...widget,
+  };
+}
+export function defineNumberWidget(widget: Omit<NumberWidget, 'widget'>): NumberWidget {
+  return {
+    widget: 'number',
+    ...widget,
+  };
+}
+export function defineObjectWidget(widget: Omit<ObjectWidget, 'widget'>): ObjectWidget {
+  return {
+    widget: 'object',
+    ...widget,
+  };
+}
+export function defineRelationWidget(widget: Omit<RelationWidget, 'widget'>): RelationWidget {
+  return { widget: 'relation', ...widget };
+}
+export function defineSelectWidget(widget: Omit<SelectWidget, 'widget'>): SelectWidget {
+  return {
+    widget: 'select',
+    ...widget,
+  };
+}
+export function defineStringWidget(widget: Omit<StringWidget, 'widget'>): StringWidget {
+  return {
+    widget: 'string',
+    ...widget,
+  };
+}
+export function defineTextWidget(widget: Omit<TextWidget, 'widget'>): TextWidget {
+  return {
+    widget: 'text',
+    ...widget,
+  };
+}
+export function defineMarkdownWidget(widget: Omit<MarkdownWidget, 'widget'>): MarkdownWidget {
+  return {
+    widget: 'markdown',
+    ...widget,
+  };
+}
 
-export type NetlifyCMSEntry = {
+export interface NetlifyCMSEntry {
   /**
    * Name of config file
-   * 
+   *
    * @default cms.config
    */
   configFile?: string;
@@ -138,7 +141,7 @@ export type NetlifyCMSEntry = {
 
   /**
    * Folder to save config file
-   * 
+   *
    * @default ./public/admin
    */
   saveFolder?: string;
@@ -150,104 +153,101 @@ export type NetlifyCMSEntry = {
 
   /**
    * Title of the admin page
-   * 
+   *
    * @default Admin
    */
   title?: string;
 
   /**
    * Icon URL of the admin page
-   * 
+   *
    * @default https://decapcms.org/img/decap-logo.svg
    */
   iconUrl?: string;
 
   /**
    * If has to use identity widget
-   * 
+   *
    * @default true
    */
   useIdentityWidget?: boolean;
-};
+}
 
-const createFolderIfNotExists = async (path: string) => {
+async function createFolderIfNotExists(path: string) {
   try {
     await readdir(path);
-  } catch {
+  }
+  catch {
     await mkdir(path, { recursive: true });
   }
-};
+}
 
-const saveConfig = async (document: string, pathTo: string) => {
+async function saveConfig(document: string, pathTo: string) {
   await writeFile(pathTo, document);
-};
+}
 
-const resolveConfigFilePath = (configFile: string) => {
-  const _path = configFile.startsWith(".") ? configFile.slice(2) : configFile;
+function resolveConfigFilePath(configFile: string) {
+  const _path = configFile.startsWith('.') ? configFile.slice(2) : configFile;
 
-  if (!_path) return configFile;
-  if (["ts", "js", "cjs", "mjs"].some((ext) => _path.includes(ext))) {
-    return _path.split(".").slice(0, -1).join(".");
-  }
+  if (!_path)
+    return configFile;
+  if (['ts', 'js', 'cjs', 'mjs'].some(ext => _path.includes(ext)))
+    return _path.split('.').slice(0, -1).join('.');
 
   return _path;
-};
+}
 
-const getConfigFile = async (
-  root: string,
-  configFile: string
-): Promise<NetlifyCMSConfig> => {
+async function getConfigFile(root: string, configFile: string): Promise<NetlifyCMSConfig> {
   try {
     const files = await readdir(root);
     const configPath = resolveConfigFilePath(configFile);
 
-    if (configPath.includes("/")) {
-      const [folder, file] = configPath.split("/");
+    if (configPath.includes('/')) {
+      const [folder, file] = configPath.split('/');
       return await getConfigFile(path.join(root, folder), file);
     }
 
-    const file = files.find((file) => file.startsWith(configPath));
+    const file = files.find(file => file.startsWith(configPath));
 
-    if (!file) {
+    if (!file)
       throw new Error(`Config file not found`);
-    }
 
-    const { config } =
-      (await loadConfigFromFile(
-        { command: "build", mode: "" },
-        path.join(root, file)
+    const { config }
+      = (await loadConfigFromFile(
+        { command: 'build', mode: '' },
+        path.join(root, file),
       )) ?? {};
 
-    if (!config) {
+    if (!config)
       throw new Error(`Config file not found`);
-    }
 
     return config as NetlifyCMSConfig;
-  } catch {
+  }
+  catch {
     throw new Error(`Config file not found`);
   }
-};
+}
 
-const createIndex = (title: string, iconUrl: string, useIdentityWidget: boolean) => {
-  const icon = iconUrl ? `<link rel="icon" type="image/svg+xml" href="${iconUrl}" />` : "";
-  const identity = useIdentityWidget ? `<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>` : "";
+function createIndex(title: string, iconUrl: string, useIdentityWidget: boolean) {
+  const icon = iconUrl ? `<link rel="icon" type="image/svg+xml" href="${iconUrl}" />` : '';
+  const identity = useIdentityWidget ? `<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>` : '';
 
   const document = indexHTMLTemplate
-    .replace("{{ title }}", title)
-    .replace("{{ icon }}", icon)
-    .replace("{{ identity }}", identity);
+    .replace('{{ title }}', title)
+    .replace('{{ icon }}', icon)
+    .replace('{{ identity }}', identity);
 
   return document;
 }
 
-export const createConfig = async (root: string, entry?: NetlifyCMSEntry) => {
+export async function createConfig(root: string, entry?: NetlifyCMSEntry) {
   const {
-    configFile = "cms.config",
+    configFile = 'cms.config',
     config,
-    saveFolder = "./public/admin",
+    saveFolder = './public/admin',
     createIndexHTML = true,
-    title = "Admin",
-    iconUrl = "https://decapcms.org/img/decap-logo.svg",
+    title = 'Admin',
+    iconUrl = 'https://decapcms.org/img/decap-logo.svg',
     useIdentityWidget = true,
   } = entry ?? {};
 
@@ -255,34 +255,37 @@ export const createConfig = async (root: string, entry?: NetlifyCMSEntry) => {
   await createFolderIfNotExists(path.join(root, saveFolder));
 
   const document = YAML.stringify(resolvedConfig);
-  await saveConfig(document, path.join(root, saveFolder, "config.yml"));
+  await saveConfig(document, path.join(root, saveFolder, 'config.yml'));
 
-  if (!createIndexHTML) return;
+  if (!createIndexHTML)
+    return;
 
   const indexHTML = createIndex(title, iconUrl, useIdentityWidget);
-  await saveConfig(indexHTML, path.join(root, saveFolder, "index.html"));
-};
+  await saveConfig(indexHTML, path.join(root, saveFolder, 'index.html'));
+}
 
 export default async function (entry?: NetlifyCMSEntry): Promise<Plugin> {
-  let root = "";
+  let root = '';
 
   return {
-    name: "vite-plugin-netlify-cms",
+    name: 'vite-plugin-netlify-cms',
     configResolved: (config) => {
       root = config.root;
     },
     buildStart: async () => {
       try {
         await createConfig(root, entry);
-      } catch (error) {
+      }
+      catch (error) {
         console.log(error);
       }
     },
     handleHotUpdate: async ({ file }) => {
-      if (file.includes(entry?.configFile ?? "cms.config")) {
+      if (file.includes(entry?.configFile ?? 'cms.config')) {
         try {
           await createConfig(root, entry);
-        } catch (error) {
+        }
+        catch (error) {
           console.log(error);
         }
       }

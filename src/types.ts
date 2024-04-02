@@ -1,22 +1,22 @@
 type Widgets =
-  | "boolean"
-  | "code"
-  | "color"
-  | "datetime"
-  | "hidden"
-  | "file"
-  | "image"
-  | "list"
-  | "map"
-  | "number"
-  | "object"
-  | "relation"
-  | "select"
-  | "string"
-  | "text"
-  | "markdown";
+  | 'boolean'
+  | 'code'
+  | 'color'
+  | 'datetime'
+  | 'hidden'
+  | 'file'
+  | 'image'
+  | 'list'
+  | 'map'
+  | 'number'
+  | 'object'
+  | 'relation'
+  | 'select'
+  | 'string'
+  | 'text'
+  | 'markdown';
 
-interface BaseCollectionField {
+export interface Widget {
   name: string;
   label?: string;
   widget: Widgets;
@@ -25,28 +25,28 @@ interface BaseCollectionField {
   comment?: string;
 }
 
-export interface BooleanWidget extends BaseCollectionField {
-  widget: "boolean";
+export interface BooleanWidget extends Widget {
+  widget: 'boolean';
   default?: boolean;
 }
 
-export interface CodeWidget extends BaseCollectionField {
-  widget: "code";
+export interface CodeWidget extends Widget {
+  widget: 'code';
   default_language?: string;
   allow_language_selection?: boolean;
   keys?: string;
   output_code_only?: boolean;
 }
 
-export interface ColorWidget extends BaseCollectionField {
-  widget: "color";
+export interface ColorWidget extends Widget {
+  widget: 'color';
   default?: string;
   allowInput?: boolean;
   enableAlpha?: boolean;
 }
 
-export interface DateTimeWidget extends BaseCollectionField {
-  widget: "datetime";
+export interface DateTimeWidget extends Widget {
+  widget: 'datetime';
   default?: string;
   format?: string;
   date_format?: string | boolean;
@@ -54,13 +54,13 @@ export interface DateTimeWidget extends BaseCollectionField {
   picker_utc?: boolean;
 }
 
-export interface HiddenWidget extends BaseCollectionField {
-  widget: "hidden";
+export interface HiddenWidget extends Widget {
+  widget: 'hidden';
   default?: any;
 }
 
-export interface FileWidget extends BaseCollectionField {
-  widget: "file";
+export interface FileWidget extends Widget {
+  widget: 'file';
   default?: string;
   media_library?: Record<string, unknown>;
   allow_multiple?: boolean;
@@ -69,8 +69,8 @@ export interface FileWidget extends BaseCollectionField {
   choose_url?: boolean;
 }
 
-export interface ImageWidget extends BaseCollectionField {
-  widget: "image";
+export interface ImageWidget extends Widget {
+  widget: 'image';
   default?: string;
   media_library?: Record<string, unknown>;
   allow_multiple?: boolean;
@@ -79,8 +79,8 @@ export interface ImageWidget extends BaseCollectionField {
   choose_url?: boolean;
 }
 
-export interface ListWidget extends BaseCollectionField {
-  widget: "list";
+export interface ListWidget extends Widget {
+  widget: 'list';
   default?: string[] | CollectionField[];
   allow_add?: boolean;
   collapsed?: boolean;
@@ -95,32 +95,32 @@ export interface ListWidget extends BaseCollectionField {
   add_to_top?: boolean;
 }
 
-export interface MapWidget extends BaseCollectionField {
-  widget: "map";
+export interface MapWidget extends Widget {
+  widget: 'map';
   default?: string;
   decimals?: number;
-  type?: "Point" | "LineString" | "Polygon";
+  type?: 'Point' | 'LineString' | 'Polygon';
 }
 
-export interface NumberWidget extends BaseCollectionField {
-  widget: "number";
+export interface NumberWidget extends Widget {
+  widget: 'number';
   default?: string | number;
-  value_type?: "int" | "float";
+  value_type?: 'int' | 'float';
   min?: number;
   max?: number;
   step?: number;
 }
 
-export interface ObjectWidget extends BaseCollectionField {
-  widget: "object";
+export interface ObjectWidget extends Widget {
+  widget: 'object';
   default?: CollectionField[];
   collapsed?: boolean;
   summary?: string;
   fields: CollectionField[];
 }
 
-export interface RelationWidget extends BaseCollectionField {
-  widget: "relation";
+export interface RelationWidget extends Widget {
+  widget: 'relation';
   default?: any;
   collection: string;
   value_field: string;
@@ -133,8 +133,8 @@ export interface RelationWidget extends BaseCollectionField {
   options_length?: number;
 }
 
-export interface SelectWidget extends BaseCollectionField {
-  widget: "select";
+export interface SelectWidget extends Widget {
+  widget: 'select';
   default?: string | { label: string; value: string };
   options?: string[] | { label: string; value: string }[];
   multiple?: boolean;
@@ -142,26 +142,26 @@ export interface SelectWidget extends BaseCollectionField {
   max?: number;
 }
 
-export interface StringWidget extends BaseCollectionField {
-  widget: "string";
+export interface StringWidget extends Widget {
+  widget: 'string';
   default?: string;
 }
 
-export interface TextWidget extends BaseCollectionField {
-  widget: "text";
+export interface TextWidget extends Widget {
+  widget: 'text';
   default?: string;
 }
 
-type MarkdownButtons = "bold" | "italic" | "code" | "link" | "heading-one" | "heading-two" | "heading-three | heading-four" | "heading-five" | "heading-six" | "quote" | "bulleted-list" | "numbered-list"
+type MarkdownButtons = 'bold' | 'italic' | 'code' | 'link' | 'heading-one' | 'heading-two' | 'heading-three | heading-four' | 'heading-five' | 'heading-six' | 'quote' | 'bulleted-list' | 'numbered-list';
 
-export interface MarkdownWidget extends BaseCollectionField {
-  widget: "markdown";
+export interface MarkdownWidget extends Widget {
+  widget: 'markdown';
   default?: string;
   buttons?: MarkdownButtons[];
-  editor_components?: ("image" | "code-block")[];
-  modes?: ("raw" | "rich_text")[],
+  editor_components?: ('image' | 'code-block')[];
+  modes?: ('raw' | 'rich_text')[];
   sanitize_preview?: boolean;
-} 
+}
 
 export type CollectionField =
   | BooleanWidget
@@ -238,20 +238,20 @@ export interface Collection {
   /**
    * These settings determine how collection files are parsed and saved.
    */
-  extension?: "yml" | "yaml" | "toml" | "json" | "md" | "markdown" | "html";
+  extension?: 'yml' | 'yaml' | 'toml' | 'json' | 'md' | 'markdown' | 'html';
 
   /**
    * These settings determine how collection files are parsed and saved.
    */
   format?:
-    | "yml"
-    | "yaml"
-    | "toml"
-    | "json"
-    | "frontmatter"
-    | "yaml-frontmatter"
-    | "toml-frontmatter"
-    | "json-frontmatter";
+    | 'yml'
+    | 'yaml'
+    | 'toml'
+    | 'json'
+    | 'frontmatter'
+    | 'yaml-frontmatter'
+    | 'toml-frontmatter'
+    | 'json-frontmatter';
 
   frontmatter_delimiter?: string;
 
@@ -335,38 +335,38 @@ export interface FolderCollection extends Collection {
   create?: boolean;
 }
 
-type Locales = "bg" | "ca" | "cs" | "da" | "de" | "en" | "es" | "fa" | "fr" | "he" | "hr" | "hu" | "it" | "ja" | "ko" | "lt" | "nb_no" | "nl" | "nn_no" | "pl" | "pt" | "ro" | "ru" | "sl" | "sv" | "th" | "tr" | "uk" | "vi" | "zh-Hans" | "zh-Hant";
+type Locales = 'bg' | 'ca' | 'cs' | 'da' | 'de' | 'en' | 'es' | 'fa' | 'fr' | 'he' | 'hr' | 'hu' | 'it' | 'ja' | 'ko' | 'lt' | 'nb_no' | 'nl' | 'nn_no' | 'pl' | 'pt' | 'ro' | 'ru' | 'sl' | 'sv' | 'th' | 'tr' | 'uk' | 'vi' | 'zh-Hans' | 'zh-Hant';
 
 interface CloudinaryMediaLibrary {
-  name: "cloudinary";
+  name: 'cloudinary';
   config: {
     [key: string]: unknown;
     cloud_name: string;
     api_key: string;
 
     /**
-     * By default, the value provided for a selected image is a complete URL 
-     * for the asset on Cloudinary's CDN. Setting output_filename_only to true 
-     * will instead produce just the filename (e.g. image.jpg). This should be 
+     * By default, the value provided for a selected image is a complete URL
+     * for the asset on Cloudinary's CDN. Setting output_filename_only to true
+     * will instead produce just the filename (e.g. image.jpg). This should be
      * true if you will be directly embedding cloudinary transformation urls in page templates
-     * 
+     *
      * @default false
      */
     output_filename_only?: boolean;
 
     /**
-     * If true, uses derived url when available (the url will have image 
-     * transformation segments included). Has no effect if output_filename_only 
+     * If true, uses derived url when available (the url will have image
+     * transformation segments included). Has no effect if output_filename_only
      * is set to true
-     * 
+     *
      * @default true
      */
     use_transformations?: boolean;
 
     /**
-     * Controls whether an http or https URL is provided. 
+     * Controls whether an http or https URL is provided.
      * Has no effect if output_filename_only is set to true
-     * 
+     *
      * @default true
      */
     use_secure_url?: boolean;
@@ -374,23 +374,23 @@ interface CloudinaryMediaLibrary {
 }
 
 interface UploadcareMediaLibrary {
-  name: "uploadcare";
+  name: 'uploadcare';
   /** @see  https://uploadcare.com/docs/uploads/file-uploader-options/ */
   config: {
     [key: string]: unknown;
 
-    /** 
+    /**
      * specify whether to add a filename to the end of the url
-     * 
+     *
      * @example http://ucarecdn.com/:uuid/filename.png
-    */
+     */
     autoFilename?: boolean;
 
     /**
-     * specify a string added at the end of the url. 
-     * This could be useful to apply a set of CDN operations to each image, 
+     * specify a string added at the end of the url.
+     * This could be useful to apply a set of CDN operations to each image,
      * for example resizing or compression.
-     * 
+     *
      * @see https://uploadcare.com/docs/transformations/image/#image-transformations-list
      */
     defaultOperations?: string;
@@ -404,18 +404,18 @@ interface UploadcareMediaLibrary {
     previewStep?: boolean;
     imageShrink?: string;
     inputAcceptTypes?: string;
-    locale?: Locales | String;
+    locale?: Locales | string;
   };
 }
 
 type MediaLibrary = CloudinaryMediaLibrary | UploadcareMediaLibrary;
 
-export type NetlifyCMSConfig = {
+export interface NetlifyCMSConfig {
   /**
    * Enable the local backend for testing
-   * 
+   *
    * Requires to run a local backend server (npx decap-server)
-   * 
+   *
    * @see https://decapcms.org/docs/beta-features/?#working-with-a-local-git-repository
    */
   local_backend?: boolean;
@@ -423,7 +423,7 @@ export type NetlifyCMSConfig = {
     /**
      * The name of the backend to use.
      */
-    name: "git-gateway" | "github" | "gitlab" | "bitbucket" | "azure" | "gitea";
+    name: 'git-gateway' | 'github' | 'gitlab' | 'bitbucket' | 'azure' | 'gitea';
 
     /**
      * [org-or-username]/[repo-name] Required for github, gitlab,
@@ -484,43 +484,43 @@ export type NetlifyCMSConfig = {
   };
 
   /**
-   * By default, all entries created or edited in the Decap CMS are committed directly 
+   * By default, all entries created or edited in the Decap CMS are committed directly
    * into the main repository branch.
-   * 
+   *
    * The publish_mode option allows you to enable "Editorial Workflow" mode
    * for more control over the content publishing phases. All unpublished
    * entries will be arranged in a board according to their status,
    * and they can be further reviewed and edited before going live.
    * Note: Editorial workflow works with GitHub repositories,
    * and support for GitLab and Bitbucket is in beta.
-   * 
+   *
    * @see https://decapcms.org/docs/configuration-options/#publish-mode
    */
-  publish_mode?: "editorial_workflow";
+  publish_mode?: 'editorial_workflow';
 
   /**
-   * The media_folder option specifies the folder path where 
+   * The media_folder option specifies the folder path where
    * uploaded files should be saved, relative to the base of the repo.
-   * 
+   *
    * @example media_folder: "static/images/uploads"
    */
   media_folder: string;
 
   /**
-   * The public_folder option specifies the folder path where the 
-   * files uploaded by the media library will be accessed, relative to 
-   * the base of the built site. For fields controlled by [file] or [image] 
-   * widgets, the value of the field is generated by prepending this path to 
-   * the filename of the selected file. Defaults to the value of media_folder, 
+   * The public_folder option specifies the folder path where the
+   * files uploaded by the media library will be accessed, relative to
+   * the base of the built site. For fields controlled by [file] or [image]
+   * widgets, the value of the field is generated by prepending this path to
+   * the filename of the selected file. Defaults to the value of media_folder,
    * with an opening / if one is not already included.
-   * 
+   *
    * @example public_folder: "/images/uploads"
    */
   public_folder?: string;
 
   /**
-   * Media library integrations are configured via the media_library property, 
-   * and its value should be an object with at least a name property. 
+   * Media library integrations are configured via the media_library property,
+   * and its value should be an object with at least a name property.
    * A config property can also be used for options that should be passed to the library in use.
    */
   media_library?: MediaLibrary;
@@ -531,31 +531,31 @@ export type NetlifyCMSConfig = {
 
   /**
    * Define the cms language,
-   * 
+   *
    * If uses a language not supported, requires to be registered in the cms
-   * 
+   *
    * @see https://decapcms.org/docs/configuration-options/#locale
-   * 
+   *
    * @default en
    */
-  locale?: Locales | String;
+  locale?: Locales | string;
 
   show_preview_links?: boolean;
 
   /**
-   * The search functionally requires loading all collection(s) entries, 
-   * which can exhaust rate limits on large repositories. 
+   * The search functionally requires loading all collection(s) entries,
+   * which can exhaust rate limits on large repositories.
    * It can be disabled by setting the top level search property to false
-   * 
+   *
    * @default true
    */
   search?: boolean;
 
   slug?: {
-    encoding?: "unicode" | "ascii";
+    encoding?: 'unicode' | 'ascii';
     clean_accents?: boolean;
     sanitize_replacement?: string;
   };
 
   collections: (FileCollection | FolderCollection)[];
-};
+}
