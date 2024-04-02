@@ -152,7 +152,7 @@ export interface TextWidget extends Widget {
   default?: string;
 }
 
-type MarkdownButtons = 'bold' | 'italic' | 'code' | 'link' | 'heading-one' | 'heading-two' | 'heading-three | heading-four' | 'heading-five' | 'heading-six' | 'quote' | 'bulleted-list' | 'numbered-list';
+type MarkdownButtons = 'bold' | 'italic' | 'code' | 'link' | 'heading-one' | 'heading-two' | 'heading-three' | 'heading-four' | 'heading-five' | 'heading-six' | 'quote' | 'bulleted-list' | 'numbered-list';
 
 export interface MarkdownWidget extends Widget {
   widget: 'markdown';
